@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDownAZ, faMagnifyingGlass, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { useRequestAddTask, useRequestDeleteTask, useRequestGetTasks, useRequestUpdateTask } from './hooks';
+
 // import debounce from 'lodash/debounce';
 
 function App() {
@@ -62,23 +63,26 @@ function App() {
 		const query = target.value.toLowerCase();
 		setSearchQuery(query);
 		const filtered = Object.entries(todos).filter(([id, { title }]) =>
-			title.toLowerCase().includes(query)
+			title.toLowerCase().includes(query),
 		);
 		setFilteredTasks(filtered);
 	};
 
 	useEffect(() => {
 		const filtered = Object.entries(todos).filter(([id, { title }]) =>
-			title.toLowerCase().includes(searchQuery)
+			title.toLowerCase().includes(searchQuery),
 		);
 		setFilteredTasks(filtered);
 	}, [searchQuery, todos]);
 
 	const handleSortClick = () => {
 		setIsSorting(true);
-		const sortedTodos = Object.entries(todos).sort(([, a], [, b]) => a.title.localeCompare(b.title));
-		setFilteredTasks(sortedTodos);
-		setSortedTodos(sortedTodos);
+		if (todos && Object.keys(todos).length > 0) {
+			const sortedTodos = Object.entries(todos).sort(([, a], [, b]) => a.title.localeCompare(b.title));
+			setFilteredTasks(sortedTodos);
+			setSortedTodos(sortedTodos);
+		}
+		return;
 	};
 
 	return (
@@ -97,16 +101,10 @@ function App() {
 								<button className={styles.btn} onClick={() => handleEditTask(id, title)}>
 									<FontAwesomeIcon icon={faPenToSquare} />
 								</button>
-								{Object.keys(todos).length === 1 ? (
-									<button className={styles.btn} disabled>
-										Удалить
-									</button>
-								) : (
 								<button className={styles.btn}
 										onClick={() => requestDeleteTask(id)}>
 									Удалить
 								</button>
-									)}
 							</li>
 						))
 					}

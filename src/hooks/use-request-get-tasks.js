@@ -11,7 +11,7 @@ export const useRequestGetTasks = () => {
 		const todosDbRef = ref(db, 'todos');
 
 		return onValue(todosDbRef, (snapshot) => {
-			const loadedTodos = snapshot.val();
+			const loadedTodos = snapshot.val() || {};
 
 			setTodos(loadedTodos);
 			setIsLoading(false);

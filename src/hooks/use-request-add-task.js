@@ -10,16 +10,6 @@ export const useRequestAddTask = (todos, setError) => {
 	const requestAddTask = (taskText) => {
 		setIsCreating(true);
 
-		const isDuplicateTask = Object.entries(todos).some(([id, todo]) =>
-			todo.title.toLowerCase() === taskText.trim().toLowerCase(),
-		);
-
-		if (isDuplicateTask) {
-			setError('Задача уже существует');
-			setIsCreating(false);
-			return;
-		}
-
 		push(todosDbRef, {
 			title: taskText,
 		})
@@ -29,6 +19,21 @@ export const useRequestAddTask = (todos, setError) => {
 			.finally(() => {
 				setIsCreating(false);
 			});
+
+		if (todos && Object.keys(todos).length > 0) {
+			const isDuplicateTask = Object.entries(todos).some(([id, todo]) =>
+				todo.title.toLowerCase() === taskText.trim().toLowerCase(),
+			);
+
+			if (isDuplicateTask) {
+				setError('Задача уже существует');
+				setIsCreating(false);
+				return;
+			}
+		} else {
+			return;
+		}
+
 	};
 	return { requestAddTask, setError, isCreating };
 };
