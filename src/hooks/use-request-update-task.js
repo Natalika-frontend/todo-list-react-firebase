@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState } from 'react';
 import { ref, set } from 'firebase/database';
 import { db } from '../firebase';
 
-export const useRequestUpdateTask = (todos, taskText, setTaskText) => {
+export const useRequestUpdateTask = (todos, taskText, setTaskText, setError, error) => {
 
 	const [isEditing, setIsEditing] = useState(false);
 	const [editingTaskId, setEditingTaskId] = useState(null);
+
 	const requestUpdateTask = (id) => {
 		const updatedTodo = todos[id];
 		if (updatedTodo) {
@@ -14,7 +15,7 @@ export const useRequestUpdateTask = (todos, taskText, setTaskText) => {
 			const todosDbRef = ref(db, `todos/${id}`);
 
 			set(todosDbRef, {
-				title: taskText
+				title: taskText,
 			})
 				.then(() => {
 					setEditingTaskId(null);
@@ -25,6 +26,7 @@ export const useRequestUpdateTask = (todos, taskText, setTaskText) => {
 				});
 		}
 	};
+
 	return {
 		taskText,
 		isEditing,

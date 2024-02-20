@@ -60,6 +60,17 @@
 	margin: auto;
 }
 
+.search {
+	display: flex;
+	background: #1e1e1e;
+	justify-content: center;
+	width: 100%;
+	height: 100px;
+	position: absolute;
+	bottom: 100px;
+	margin: auto;
+}
+
 .input {
 	background: #455a64;
 	border: none;
@@ -110,6 +121,7 @@
 	animation: mulShdSpin 1.1s infinite ease;
 	transform: translateZ(0);
 }
+
 @keyframes mulShdSpin {
 	0%, 100% {
 		box-shadow: 0em -2.6em 0em 0em #fed36a, 1.8em -1.8em 0 0em rgba(254, 211, 106, 0.2), 2.5em 0em 0 0em rgba(254, 211, 106, 0.2), 1.75em 1.75em 0 0em rgba(254, 211, 106, 0.2), 0em 2.5em 0 0em rgba(254, 211, 106, 0.2), -1.8em 1.8em 0 0em rgba(254, 211, 106, 0.2), -2.6em 0em 0 0em rgba(254, 211, 106, 0.5), -1.8em -1.8em 0 0em rgba(254, 211, 106, 0.7);

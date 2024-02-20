@@ -2,15 +2,13 @@ import { useState } from 'react';
 import { ref, push } from 'firebase/database';
 import { db } from '../firebase';
 
-export const useRequestAddTask = (todos, taskText, setTaskText) => {
+export const useRequestAddTask = (todos, setError) => {
 	const [isCreating, setIsCreating] = useState(false);
-	const [error, setError] = useState('');
 
 	const todosDbRef = ref(db, 'todos');
 
 	const requestAddTask = (taskText) => {
 		setIsCreating(true);
-		// setIsSearching(false);
 
 		const isDuplicateTask = Object.entries(todos).some(([id, todo]) =>
 			todo.title.toLowerCase() === taskText.trim().toLowerCase(),
@@ -32,5 +30,5 @@ export const useRequestAddTask = (todos, taskText, setTaskText) => {
 				setIsCreating(false);
 			});
 	};
-	return { isCreating, error, requestAddTask };
+	return { requestAddTask, setError, isCreating };
 };
