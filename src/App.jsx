@@ -6,6 +6,9 @@ import { useRequestAddTask, useRequestDeleteTask, useRequestGetTasks, useRequest
 // import debounce from 'lodash/debounce';
 
 function App() {
+	useEffect(() => {
+		document.title = 'TODOшка';
+	}, []);
 
 	const [taskText, setTaskText] = useState('');
 	const [error, setError] = useState('');
@@ -94,10 +97,16 @@ function App() {
 								<button className={styles.btn} onClick={() => handleEditTask(id, title)}>
 									<FontAwesomeIcon icon={faPenToSquare} />
 								</button>
-								<button className={styles.btn} disabled={isDeleting}
+								{Object.keys(todos).length === 1 ? (
+									<button className={styles.btn} disabled>
+										Удалить
+									</button>
+								) : (
+								<button className={styles.btn}
 										onClick={() => requestDeleteTask(id)}>
 									Удалить
 								</button>
+									)}
 							</li>
 						))
 					}
